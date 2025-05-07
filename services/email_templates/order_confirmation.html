@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #28a745; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f8f9fa; }
+        .order-details { margin: 20px 0; padding: 15px; border: 1px solid #dee2e6; border-radius: 5px; }
+        .order-items { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .order-items th, .order-items td { padding: 10px; border: 1px solid #dee2e6; text-align: left; }
+        .order-items th { background: #f8f9fa; }
+        .total { font-size: 18px; font-weight: bold; text-align: right; margin-top: 20px; }
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+        .button { display: inline-block; padding: 10px 20px; background: #28a745; color: white; 
+                 text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Order Confirmation</h1>
+        </div>
+        <div class="content">
+            <h2>Thank you for your order, {{name}}!</h2>
+            <p>We're pleased to confirm that we've received your order. Here are your order details:</p>
+            
+            <div class="order-details">
+                <p><strong>Order ID:</strong> {{order_id}}</p>
+                <p><strong>Order Date:</strong> {{order_date}}</p>
+                
+                <h3>Order Items:</h3>
+                {{order_items}}
+                
+                <p class="total">Total Amount: ₱{{order_total}}</p>
+            </div>
+            
+            <p>You can track your order status by clicking the button below:</p>
+            <p style="text-align: center;">
+                <a href="http://slsupplyhub.com/order-detail.php?id={{order_id}}" class="button">Track Order</a>
+            </p>
+            
+            <p>If you have any questions about your order, please don't hesitate to contact our customer service team.</p>
+        </div>
+        <div class="footer">
+            <p>© 2025 SL Supply Hub. All rights reserved.</p>
+            <p>This is an automated email, please do not reply.</p>
+        </div>
+    </div>
+</body>
+</html>
