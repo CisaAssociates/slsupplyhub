@@ -188,7 +188,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <!-- end auth-fluid-->
 
     <!-- Authentication js -->
-    <script src="<?php echo base_url(); ?>js/pages/authentication.init.js"></script>
+    <script src="<?php echo asset_url(); ?>js/pages/authentication.init.js"></script>
 
 </body>
 </html>
