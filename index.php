@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/welcome/favicon.ico">
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="assets/welcome/css/bootstrap.min.css" type="text/css">
@@ -84,7 +84,7 @@
                         <p class="lead text-muted mb-4">Shop from thousands of verified sellers and find exactly what you need. Free shipping on orders over ₱50!</p>
                         <div class="d-flex gap-2">
                             <a href="customer/index.php" class="btn btn-info">Shop Now</a>
-                            <a href="supplier/dashboard.php" class="btn btn-light">Sell with Us</a>
+                            <a href="sell-with-us.php" class="btn btn-light">Sell with Us</a>
                         </div>
                     </div>
                     <div class="d-flex gap-4 mb-4">

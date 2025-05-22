@@ -3,6 +3,9 @@ require_once '../services/init.php';
 use SLSupplyHub\Order;
 use SLSupplyHub\DriverService;
 
+// Include supplier approval check
+include 'check-approval.php';
+
 // Check if user is logged in and is a supplier
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'supplier') {
     header('Location: ../auth-login.php');
@@ -33,7 +36,7 @@ $driverService = new DriverService();
 // Verify order belongs to this supplier and is in pending status
 $order = $orderService->getOrderDetails($orderId);
 if (!$order || 
-    $order['supplier_id'] != $_SESSION['supplier_id'] || 
+    $order['supplier_id'] != $supplierUserId || 
     $order['status'] !== 'pending' ||
     $order['driver_id']) {
     $_SESSION['error'] = 'Order not found or cannot be assigned';

@@ -136,6 +136,7 @@ class ComposerStaticInit2916c26d8de3bf1d43081670f4ee55af
         'SLSupplyHub\\Config' => __DIR__ . '/../..' . '/services/Config.php',
         'SLSupplyHub\\Database' => __DIR__ . '/../..' . '/services/Database.php',
         'SLSupplyHub\\Feedback' => __DIR__ . '/../..' . '/services/Feedback.php',
+        'SLSupplyHub\\Helpers\\FileUpload' => __DIR__ . '/../..' . '/services/Helpers/FileUpload.php',
         'SLSupplyHub\\Loyalty' => __DIR__ . '/../..' . '/services/Loyalty.php',
         'SLSupplyHub\\MailService' => __DIR__ . '/../..' . '/services/MailService.php',
         'SLSupplyHub\\Model' => __DIR__ . '/../..' . '/services/Model.php',

@@ -3,7 +3,7 @@
         'name' => 'slsupplyhub/b2b-platform',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1a1e857abea125284a98b804647806382aa09fce',
+        'reference' => 'b7045b200150402ef085ac5aea5f4e390726c066',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'slsupplyhub/b2b-platform' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1a1e857abea125284a98b804647806382aa09fce',
+            'reference' => 'b7045b200150402ef085ac5aea5f4e390726c066',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

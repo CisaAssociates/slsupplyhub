@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <style>
+    .process-step {
+      fill: #f8f9fa;
+      stroke: #1abc9c;
+      stroke-width: 2;
+    }
+    .process-arrow {
+      fill: none;
+      stroke: #1abc9c;
+      stroke-width: 2;
+      stroke-dasharray: 5,5;
+    }
+    .process-icon {
+      fill: #1abc9c;
+    }
+    .process-text {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      text-anchor: middle;
+    }
+    .process-title {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      text-anchor: middle;
+    }
+  </style>
+  
+  <!-- Step 1: Application -->
+  <circle class="process-step" cx="120" cy="150" r="70" />
+  <text class="process-title" x="120" y="130">Submit</text>
+  <text class="process-text" x="120" y="155">Upload documents</text>
+  <text class="process-text" x="120" y="175">and business info</text>
+  <path class="process-icon" d="M120,100 L120,90 L140,90 L140,100 L150,100 L130,120 L110,100 Z" />
+  
+  <!-- Arrow 1 -->
+  <path class="process-arrow" d="M190,150 L240,150" />
+  
+  <!-- Step 2: Review -->
+  <circle class="process-step" cx="310" cy="150" r="70" />
+  <text class="process-title" x="310" y="130">Review</text>
+  <text class="process-text" x="310" y="155">Our team verifies</text>
+  <text class="process-text" x="310" y="175">your application</text>
+  <path class="process-icon" d="M290,100 L330,100 L330,120 L290,120 Z M285,115 L295,125 L305,115 Z M315,115 L325,125 L335,115 Z" />
+
+  <!-- Arrow 2 -->
+  <path class="process-arrow" d="M380,150 L430,150" />
+  
+  <!-- Step 3: Approval -->
+  <circle class="process-step" cx="500" cy="150" r="70" />
+  <text class="process-title" x="500" y="130">Approval</text>
+  <text class="process-text" x="500" y="155">Get access to</text>
+  <text class="process-text" x="500" y="175">supplier dashboard</text>
+  <path class="process-icon" d="M480,110 L520,110 L520,130 L480,130 Z M485,100 L515,100 M500,100 L500,80 M485,120 L495,120 M505,120 L515,120" />
+
+  <!-- Arrow 3 -->
+  <path class="process-arrow" d="M570,150 L620,150" />
+  
+  <!-- Step 4: Selling -->
+  <circle class="process-step" cx="690" cy="150" r="70" />
+  <text class="process-title" x="690" y="130">Start Selling</text>
+  <text class="process-text" x="690" y="155">List products and</text>
+  <text class="process-text" x="690" y="175">grow your business</text>
+  <path class="process-icon" d="M670,100 L710,100 L710,120 L670,120 Z M675,100 L675,90 L685,90 L685,100 M695,100 L695,90 L705,90 L705,100 M675,110 L685,110 M695,110 L705,110" />
+  
+  <!-- Timeline -->
+  <path class="process-arrow" d="M120,250 L690,250" />
+  <circle fill="#1abc9c" cx="120" cy="250" r="5" />
+  <text class="process-text" x="120" y="270">Day 1</text>
+  <circle fill="#1abc9c" cx="310" cy="250" r="5" />
+  <text class="process-text" x="310" y="270">Day 2-3</text>
+  <circle fill="#1abc9c" cx="500" cy="250" r="5" />
+  <text class="process-text" x="500" y="270">Day 4</text>
+  <circle fill="#1abc9c" cx="690" cy="250" r="5" />
+  <text class="process-text" x="690" y="270">Day 5+</text>
+</svg> 

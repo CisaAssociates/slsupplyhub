@@ -42,9 +42,25 @@
             <li class="menu-title">Menu</li>
 
             <li class="menu-item">
+                <a href="orders.php" class="menu-link">
+                    <i class="menu-icon mdi mdi-cart"></i>
+                    <span class="menu-text">Orders</span>
+                </a>
+            </li>
+
+            <li class="menu-item">
                 <a href="products.php" class="menu-link">
-                    <i class="menu-icon mdi mdi-cart-outline"></i>
+                    <i class="menu-icon mdi mdi-package-variant"></i>
                     <span class="menu-text">Products</span>
+                </a>
+            </li>
+
+            <li class="menu-title">Settings</li>
+            
+            <li class="menu-item">
+                <a href="manage.php" class="menu-link">
+                    <i class="menu-icon mdi mdi-store"></i>
+                    <span class="menu-text">Business Profile</span>
                 </a>
             </li>
         </ul>

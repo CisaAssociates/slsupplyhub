@@ -1,16 +1,14 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../services/helpers/url_helper.php';
+require_once __DIR__ . '/../services/init.php';
 use SLSupplyHub\Product;
 use SLSupplyHub\Session;
 
 $session = new Session();
 
-// Check if user is logged in and is a supplier
-if (!$session->getUserId() || $session->getUserRole() !== 'supplier') {
-    header('Location: ../auth-login.php');
-    exit;
-}
+// Include supplier approval check
+include 'check-approval.php';
 
 // Get product ID
 $productId = isset($_GET['id']) ? (int)$_GET['id'] : 0;

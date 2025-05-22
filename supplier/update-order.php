@@ -1,13 +1,11 @@
 <?php
 require_once '../services.php';
+require_once '../services/init.php';
 use SLSupplyHub\Order;
 use SLSupplyHub\DriverService;
 
-// Check if user is logged in and is a supplier
-if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'supplier') {
-    header('Location: ../auth-login.php');
-    exit;
-}
+// Include supplier approval check
+include 'check-approval.php';
 
 // Get order ID and new status
 $orderId = isset($_GET['id']) ? (int)$_GET['id'] : 0;

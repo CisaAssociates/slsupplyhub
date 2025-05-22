@@ -1,5 +1,9 @@
 <?php
 include '../partials/main.php';
+
+// Include supplier approval check
+include 'check-approval.php';
+
 use SLSupplyHub\SupplierDashboard;
 
 // Check if user is logged in and is a supplier

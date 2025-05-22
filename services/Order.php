@@ -89,9 +89,42 @@ class Order extends Model
                 if (!$product) {
                     throw new \Exception("Product not found: {$item['product_id']}");
                 }
-                if ($product['supplier_id'] != (int)$orderData['supplier_id']) {
+                
+                // Check if the product belongs to the selected supplier
+                // There are two possible cases:
+                // 1. product.supplier_id is a reference to users.id (as per the schema)
+                // 2. product.supplier_id is a reference to suppliers.id (as appears to be the case in some data)
+                
+                // First check if product.supplier_id matches order.supplier_id directly
+                $supplierMatch = ($product['supplier_id'] == (int)$orderData['supplier_id']);
+                
+                // If not matched directly, check if product.supplier_id is a suppliers.id that matches the supplier for this order
+                if (!$supplierMatch) {
+                    // Get the supplier record for this product
+                    $stmt = $this->db->getConnection()->prepare("
+                        SELECT s.user_id 
+                        FROM suppliers s 
+                        WHERE s.id = ? AND s.user_id = ?
+                    ");
+                    $stmt->execute([$product['supplier_id'], (int)$orderData['supplier_id']]);
+                    $supplierMatch = ($stmt->rowCount() > 0);
+                    
+                    // If still no match, check if product.supplier_id is a user_id that corresponds to a supplier
+                    if (!$supplierMatch) {
+                        $stmt = $this->db->getConnection()->prepare("
+                            SELECT s.id 
+                            FROM suppliers s 
+                            WHERE s.id = ? AND s.user_id = ?
+                        ");
+                        $stmt->execute([(int)$orderData['supplier_id'], $product['supplier_id']]);
+                        $supplierMatch = ($stmt->rowCount() > 0);
+                    }
+                }
+                
+                if (!$supplierMatch) {
                     throw new \Exception("Product {$product['name']} does not belong to the selected supplier");
                 }
+                
                 if ($product['stock'] < $item['quantity']) {
                     throw new \Exception("Insufficient stock for: {$product['name']}");
                 }
@@ -274,8 +307,26 @@ class Order extends Model
             $offset = ($page - 1) * $perPage;
 
             // Base WHERE clause
+            // Note: supplierId could be either a user_id or a supplier.id
+            // We need to handle both cases
+            
+            // First, check if this is a supplier.id
+            $supplierUserIdQuery = "SELECT user_id FROM suppliers WHERE id = ?";
+            $stmt = $this->db->executeQuery($supplierUserIdQuery, [$supplierId]);
+            $supplierRecord = $stmt->fetch(\PDO::FETCH_ASSOC);
+            
+            if ($supplierRecord) {
+                // If it's a supplier.id, use the user_id
+                $userIdToUse = $supplierRecord['user_id'];
+                error_log("[getSupplierOrders] Using user_id {$userIdToUse} for supplier.id {$supplierId}");
+            } else {
+                // Otherwise, assume it's already a user_id
+                $userIdToUse = $supplierId;
+                error_log("[getSupplierOrders] Using direct user_id {$supplierId}");
+            }
+            
             $where = "WHERE o.supplier_id = ?";
-            $params = [$supplierId];
+            $params = [$userIdToUse];
 
             // Add status filter if provided
             if ($status) {

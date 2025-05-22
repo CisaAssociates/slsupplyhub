@@ -1,13 +1,8 @@
-<?php
-include __DIR__ . '/partials/main.php';
-?>
-
-<!DOCTYPE html>
-<html lang="en">
+<?php include 'partials/main.php'; ?>
 <head>
-    <?php 
+    <?php
     $title = "403 Forbidden";
-    include 'partials/title-meta.php'; 
+    include 'partials/title-meta.php';
     include 'partials/head-css.php';
     ?>
 </head>
@@ -19,8 +14,8 @@ include __DIR__ . '/partials/main.php';
                 <div class="col-xxl-4 col-lg-5">
                     <div class="card">
                         <div class="card-header pt-4 pb-4 text-center bg-danger">
-                            <a href="<?php echo base_url(); ?>">
-                                <span><img src="<?php echo base_url('assets/images/logo.png'); ?>" alt="logo" height="42"></span>
+                            <a href="">
+                                <span><img src="assets/images/logo.png" alt="logo" height="42"></span>
                             </a>
                         </div>
                         <div class="card-body p-4">
@@ -32,7 +27,7 @@ include __DIR__ . '/partials/main.php';
                                     Please contact an administrator if you believe this is an error.
                                 </p>
 
-                                <a class="btn btn-info mt-3" href="<?php echo base_url(); ?>"><i class="mdi mdi-reply"></i> Return Home</a>
+                                <a class="btn btn-info mt-3" href=""><i class="mdi mdi-reply"></i> Return Home</a>
                             </div>
                         </div>
                     </div>
@@ -43,4 +38,5 @@ include __DIR__ . '/partials/main.php';
 
     <?php include 'partials/footer-scripts.php'; ?>
 </body>
+
 </html>

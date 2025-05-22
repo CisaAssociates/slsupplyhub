@@ -6,6 +6,7 @@ use SLSupplyHub\Order;
 use SLSupplyHub\Cart;
 use SLSupplyHub\Address;
 use SLSupplyHub\Session;
+use SLSupplyHub\Database;
 
 $session = new Session();
 
@@ -33,8 +34,64 @@ try {
         throw new \Exception('Your cart is empty');
     }
 
-    // Use the user_id directly as the supplier_id since that's what the foreign key expects
-    $supplier_id = $cart['items'][0]['supplier_id'];
+    // Get the product's supplier_id from the first cart item
+    $productSupplierId = $cart['items'][0]['supplier_id'];
+    
+    // Debug info
+    error_log("Checkout Debug - Product supplier_id: " . $productSupplierId);
+    
+    // Get database connection
+    $db = Database::getInstance();
+    
+    // IMPORTANT: The orders.supplier_id foreign key references suppliers.user_id
+    // We need to find the supplier's user_id regardless of whether product.supplier_id
+    // is a reference to suppliers.id or users.id
+    
+    // First check if this is a supplier.id
+    $stmt = $db->executeQuery("
+        SELECT s.id, s.user_id, s.business_name, s.status, u.role, u.status as user_status
+        FROM suppliers s
+        JOIN users u ON s.user_id = u.id
+        WHERE s.id = ?
+    ", [$productSupplierId]);
+    
+    $supplier = $stmt->fetch(\PDO::FETCH_ASSOC);
+    
+    if ($supplier) {
+        // If found as supplier.id, use the supplier's user_id for the order
+        error_log("Checkout Debug - Found supplier by id: " . json_encode($supplier));
+        $supplier_id = $supplier['user_id']; // Use user_id to satisfy the foreign key constraint
+    } else {
+        // If not found as supplier.id, check if it's a user_id
+        $stmt = $db->executeQuery("
+            SELECT s.id, s.user_id, s.business_name, s.status, u.role, u.status as user_status
+            FROM suppliers s
+            JOIN users u ON s.user_id = u.id
+            WHERE s.user_id = ?
+        ", [$productSupplierId]);
+        
+        $supplier = $stmt->fetch(\PDO::FETCH_ASSOC);
+        
+        if ($supplier) {
+            // If found as user_id, use it directly
+            error_log("Checkout Debug - Found supplier by user_id: " . json_encode($supplier));
+            $supplier_id = $productSupplierId; // This is already a user_id
+        } else {
+            error_log("Checkout Debug - Supplier not found by any method");
+            throw new \Exception('Supplier not found. Please contact support.');
+        }
+    }
+    
+    // Debug info
+    error_log("Checkout Debug - Using supplier_id for order: " . $supplier_id);
+    
+    if ($supplier['status'] !== 'approved') {
+        throw new \Exception('This supplier is not currently approved to accept orders.');
+    }
+    
+    if ($supplier['user_status'] !== 'active') {
+        throw new \Exception('This supplier account is not currently active.');
+    }
     
     // Generate unique order number (timestamp + user ID)
     $order_number = 'ORD' . time() . '-' . $userId;

@@ -5,6 +5,7 @@ namespace SLSupplyHub;
 use PDO;
 use Exception;
 use PDOException;
+use SLSupplyHub\Config;
 
 class Database
 {

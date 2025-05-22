@@ -1,12 +1,8 @@
 <?php
 include '../partials/main.php';
 
-if (!$session->getUserId() || $session->getUserRole() !== 'supplier') {
-    header('Location: ../auth-login.php');
-    exit;
-}
-
-$supplierId = $session->getUserId();
+// Include supplier approval check
+include 'check-approval.php';
 
 $productService = new SLSupplyHub\Product();
 

@@ -1,5 +1,9 @@
 <?php
 include '../partials/main.php';
+
+// Include supplier approval check
+include 'check-approval.php';
+
 use SLSupplyHub\Order;
 use SLSupplyHub\Feedback;
 use SLSupplyHub\DriverService;
@@ -14,8 +18,8 @@ $orderId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 // Get order details
 $order = $orderModel->getOrderDetails($orderId);
-if (!$order || $order['supplier_id'] != $_SESSION['supplier_id']) {
-    header('Location: index.php');
+if (!$order || $order['supplier_id'] != $supplierUserId) {
+    header('Location: orders.php');
     exit;
 }
 

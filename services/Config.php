@@ -42,13 +42,6 @@ class Config {
         }
     }
 
-    // 'APP_URL' => 'https://slsupplyhub.slsuisa.com',
-            
-    // 'DB_HOST' => 'localhost',
-    // 'DB_NAME' => 'u347279731_slsupplyhub_db',
-    // 'DB_USER' => 'u347279731_slsupplyhub',
-    // 'DB_PASS' => 'Slsupplyhub2025',
-    
     private function setDefaults() {
         $defaults = [
             'APP_NAME' => 'SL Supply Hub',

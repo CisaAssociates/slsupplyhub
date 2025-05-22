@@ -47,6 +47,29 @@
                     <span class="menu-text">Users Management</span>
                 </a>
             </li>
+            
+            <li class="menu-item">
+                <a href="<?= base_url('/admin/') ?>supplier-approvals.php" class="menu-link">
+                    <i class="menu-icon mdi mdi-store"></i>
+                    <span class="menu-text">Supplier Applications</span>
+                    <?php
+                    // Count pending supplier applications
+                    try {
+                        $db = \SLSupplyHub\Database::getInstance();
+                        $conn = $db->getConnection();
+                        $stmt = $conn->prepare("SELECT COUNT(*) FROM suppliers WHERE status = 'pending'");
+                        $stmt->execute();
+                        $pendingCount = $stmt->fetchColumn();
+                        
+                        if ($pendingCount > 0) {
+                            echo '<span class="badge bg-danger rounded-pill float-end">' . $pendingCount . '</span>';
+                        }
+                    } catch (Exception $e) {
+                        // Silently fail
+                    }
+                    ?>
+                </a>
+            </li>
         </ul>
         <!--- End Menu -->
         <div class="clearfix"></div>

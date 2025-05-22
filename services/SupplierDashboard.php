@@ -5,10 +5,10 @@ use PDO;
 use Exception;
 
 class SupplierDashboard extends Model {
-    private $db;
+    protected $db;
     
     public function __construct() {
-        $this->db = Database::getInstance();
+        parent::__construct();
     }
     
     public function getPerformanceMetrics($supplierId, $period = 30) {

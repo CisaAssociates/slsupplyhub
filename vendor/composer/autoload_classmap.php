@@ -71,6 +71,7 @@ return array(
     'SLSupplyHub\\Config' => $baseDir . '/services/Config.php',
     'SLSupplyHub\\Database' => $baseDir . '/services/Database.php',
     'SLSupplyHub\\Feedback' => $baseDir . '/services/Feedback.php',
+    'SLSupplyHub\\Helpers\\FileUpload' => $baseDir . '/services/Helpers/FileUpload.php',
     'SLSupplyHub\\Loyalty' => $baseDir . '/services/Loyalty.php',
     'SLSupplyHub\\MailService' => $baseDir . '/services/MailService.php',
     'SLSupplyHub\\Model' => $baseDir . '/services/Model.php',

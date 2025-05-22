@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 07, 2025 at 07:53 PM
+-- Generation Time: May 20, 2025 at 08:13 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -30,14 +30,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `addresses` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
-  `first_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `barangay` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `postal_code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `street` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `barangay` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `postal_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_default` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -71,14 +71,6 @@ CREATE TABLE `cart` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id`, `customer_id`, `product_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(55, 2, 4, 1, '2025-05-07 19:09:59', '2025-05-07 19:09:59'),
-(56, 2, 3, 1, '2025-05-07 19:13:28', '2025-05-07 19:13:28');
 
 -- --------------------------------------------------------
 
@@ -276,7 +268,7 @@ CREATE TABLE `notifications` (
 --
 
 CREATE TABLE `orders` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
   `customer_id` int NOT NULL,
   `supplier_id` int NOT NULL,
   `driver_id` int DEFAULT NULL,
@@ -290,9 +282,19 @@ CREATE TABLE `orders` (
   `payment_method` varchar(50) DEFAULT NULL,
   `notes` text,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `supplier_id`, `driver_id`, `address_id`, `order_number`, `subtotal`, `total_amount`, `delivery_fee`, `status`, `payment_status`, `payment_method`, `notes`, `created_at`, `updated_at`) VALUES
+(3, 2, 21, NULL, 29, 'ORD1746649906-2', '58429.00', '61350.45', '0.00', 'pending', 'pending', 'cod', '', '2025-05-07 20:49:26', '2025-05-07 20:49:26'),
+(6, 2, 21, NULL, 29, 'ORD1746652480-2', '58429.00', '61350.45', '0.00', 'pending', 'pending', 'cod', '', '2025-05-07 21:14:40', '2025-05-07 21:14:40'),
+(7, 2, 21, NULL, 29, 'ORD1746652539-2', '55000.00', '57750.00', '0.00', 'pending', 'pending', 'cod', '', '2025-05-07 21:15:39', '2025-05-07 21:15:39'),
+(8, 2, 21, NULL, 29, 'ORD1746653746-2', '3429.00', '3600.45', '0.00', 'pending', 'pending', 'cod', '', '2025-05-07 21:35:46', '2025-05-07 21:35:46');
+
 -- --------------------------------------------------------
 
 --
@@ -300,15 +302,24 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `order_items` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `subtotal` decimal(10,2) NOT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `price`, `subtotal`, `created_at`) VALUES
+(1, 6, 3, 1, '55000.00', '55000.00', '2025-05-07 21:14:40'),
+(2, 6, 4, 1, '3429.00', '3429.00', '2025-05-07 21:14:40'),
+(3, 7, 3, 1, '55000.00', '55000.00', '2025-05-07 21:15:39'),
+(4, 8, 4, 1, '3429.00', '3429.00', '2025-05-07 21:35:46');
 
 -- --------------------------------------------------------
 
@@ -386,7 +397,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `supplier_id`, `category_id`, `name`, `description`, `price`, `regular_price`, `stock`, `unit`, `minimum_order`, `rating`, `review_count`, `status`, `created_at`, `updated_at`, `image_path`) VALUES
 (3, 21, 14, 'ROG Zephyrus G14 (2025) GA403WP-QS024WSM', 'Windows 11 Home\n\nNVIDIA® GeForce RTX™ 5070 Laptop GPU\n\nAMD XDNA™ NPU up to 50TOPS\n\nAMD Ryzen™ AI 9 HX 370 Processor\n\n14\" 3K (2880 x 1800) 16:10 120Hz OLED ROG Nebula Display\n\n1TB M.2 NVMe™ PCIe® 4.0 SSD storage', '55000.00', '55000.00', 1000, 'pack', 1, '0.00', 0, 'active', '2025-05-05 21:50:32', '2025-05-05 22:50:56', 'uploads/images/file_681932a80658a2.74126321.png'),
-(4, 21, 14, 'itel A50 RAM 8GB (3GB+5GB)+ROM 64GB | 6.6\" Big Screen | 5000mAh Big Battery 10W TypeC | AI Camera', '⭕️Size: 163.95 x 75.7 x 8.7 mm\r\n\r\n⭕️Weight（g）: 185g\r\n\r\n⭕️CPU: T603 Octa-core LTE Chipset\r\n\r\n⭕️Memory:3gb(extend to 8gb)+64gb\r\n\r\n⭕️Display: 6.6\" Big Screen with Dynamic Island 1612 x 720 Pixels\r\n\r\n⭕️Camera: 8MP Rear Cam 5MP Front Cam\r\n\r\n⭕️Battery: 5000mAh 10W Charging Type-C\r\n\r\n⭕️Network: 4G\r\n\r\n⭕️Wifi: 2.4G\r\n\r\n⭕️Bluetooth: 4.2\r\n\r\n⭕️Unlock: Side Fingerprint/Face Unlock\r\n\r\n⭕️Inbox: Phone*1 Charger*1 Cable*1 Phonecase*1\r\n\r\n⭕️Warraty: 12months', '3429.00', '3429.00', 99, 'pack', 5, '0.00', 0, 'active', '2025-05-06 06:07:56', '2025-05-06 11:42:10', 'uploads/images/file_6819a73cbb1814.90967553.jpg');
+(4, 21, 14, 'itel A50 RAM 8GB (3GB+5GB)+ROM 64GB | 6.6\" Big Screen | 5000mAh Big Battery 10W TypeC | AI Camera', '⭕️Size: 163.95 x 75.7 x 8.7 mm\r\n\r\n⭕️Weight（g）: 185g\r\n\r\n⭕️CPU: T603 Octa-core LTE Chipset\r\n\r\n⭕️Memory:3gb(extend to 8gb)+64gb\r\n\r\n⭕️Display: 6.6\" Big Screen with Dynamic Island 1612 x 720 Pixels\r\n\r\n⭕️Camera: 8MP Rear Cam 5MP Front Cam\r\n\r\n⭕️Battery: 5000mAh 10W Charging Type-C\r\n\r\n⭕️Network: 4G\r\n\r\n⭕️Wifi: 2.4G\r\n\r\n⭕️Bluetooth: 4.2\r\n\r\n⭕️Unlock: Side Fingerprint/Face Unlock\r\n\r\n⭕️Inbox: Phone*1 Charger*1 Cable*1 Phonecase*1\r\n\r\n⭕️Warraty: 12months', '3429.00', '3429.00', 98, 'pack', 5, '0.00', 0, 'active', '2025-05-06 06:07:56', '2025-05-07 21:14:40', 'uploads/images/file_6819a73cbb1814.90967553.jpg');
 
 -- --------------------------------------------------------
 
@@ -421,15 +432,53 @@ CREATE TABLE `suppliers` (
   `total_orders` int DEFAULT '0',
   `status` enum('pending','approved','suspended') DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `business_permit_file` varchar(255) DEFAULT NULL,
+  `tax_certificate_file` varchar(255) DEFAULT NULL,
+  `store_photos_json` json DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` (`id`, `user_id`, `business_name`, `business_address`, `business_phone`, `business_email`, `business_permit_number`, `tax_id`, `rating`, `total_orders`, `status`, `created_at`, `updated_at`) VALUES
-(1, 21, 'Mark\'s Steven Store', 'Paku, Bontoc So. Leyte', '09566434376', 'kmar0956@gmail.com', '323231', NULL, '0.00', 0, 'approved', '2025-05-05 22:36:58', '2025-05-05 22:44:56');
+INSERT INTO `suppliers` (`id`, `user_id`, `business_name`, `business_address`, `business_phone`, `business_email`, `business_permit_number`, `tax_id`, `rating`, `total_orders`, `status`, `created_at`, `updated_at`, `business_permit_file`, `tax_certificate_file`, `store_photos_json`) VALUES
+(1, 21, 'Mark\'s Steven Store', 'Paku, Bontoc So. Leyte', '09566434376', 'kmar0956@gmail.com', '323231', NULL, '0.00', 0, 'approved', '2025-05-05 22:36:58', '2025-05-05 22:44:56', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_business_info`
+--
+
+CREATE TABLE `supplier_business_info` (
+  `id` int NOT NULL,
+  `supplier_id` int NOT NULL,
+  `business_type` enum('Individual','Corporation','Partnership') NOT NULL,
+  `shop_name` varchar(100) NOT NULL,
+  `shop_description` text,
+  `operating_hours` json DEFAULT NULL,
+  `delivery_areas` text,
+  `return_policy` text,
+  `cod_areas` text,
+  `min_processing_days` int DEFAULT '1',
+  `max_processing_days` int DEFAULT '3',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_photos`
+--
+
+CREATE TABLE `supplier_photos` (
+  `id` int NOT NULL,
+  `supplier_id` int NOT NULL,
+  `photo_path` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -443,7 +492,6 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `fullname` varchar(100) NOT NULL,
   `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `user_type` enum('customer','supplier','driver','admin') NOT NULL,
   `status` enum('active','inactive','suspended') DEFAULT 'active',
   `email_verified` tinyint(1) DEFAULT '0',
   `role` enum('customer','supplier','driver','admin') DEFAULT 'customer',
@@ -455,11 +503,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `fullname`, `phone`, `user_type`, `status`, `email_verified`, `role`, `created_at`, `updated_at`) VALUES
-(2, 'kmar0956@gmail.com', '$2y$10$sNJeJned.5deU2UIlGS3f.JdouVMJsiTVANnykMHvqwfP/zmjfDh2', 'Mark Steven B. Peligro', NULL, 'customer', 'active', 0, 'customer', '2025-05-04 03:32:20', '2025-05-04 03:32:20'),
-(8, 'test@test.com', '$2y$10$dNS4sjzFfv238dVvuPfdkeniKcamP0bS8LCRaJwwiM/knrhQXrwZy', 'test', NULL, 'customer', 'active', 0, 'customer', '2025-05-04 03:48:37', '2025-05-04 03:48:37'),
-(9, 'support.slsupply@gmail.com', '$2y$10$77GVgdelKipZiXBNTkQeF.gJWVKkosPcHLr..rkB9vJB6xTDuGzPW', 'Administrator', NULL, 'admin', 'active', 0, 'admin', '2025-05-04 09:48:15', '2025-05-04 09:51:21'),
-(21, 'smorphyguy12@gmail.com', '$2y$10$fZy7NBe0as9i8NlSFc8ZhupxSoQO2pdwNqDufrsbILSYHrQGoMWJu', 'Mark Steven B. Peligro', '09566434376', 'customer', 'active', 0, 'supplier', '2025-05-04 14:29:49', '2025-05-04 14:29:49');
+INSERT INTO `users` (`id`, `email`, `password`, `fullname`, `phone`, `status`, `email_verified`, `role`, `created_at`, `updated_at`) VALUES
+(2, 'kmar0956@gmail.com', '$2y$10$sNJeJned.5deU2UIlGS3f.JdouVMJsiTVANnykMHvqwfP/zmjfDh2', 'Mark Steven B. Peligro', NULL, 'active', 0, 'customer', '2025-05-04 03:32:20', '2025-05-04 03:32:20'),
+(8, 'test@test.com', '$2y$10$dNS4sjzFfv238dVvuPfdkeniKcamP0bS8LCRaJwwiM/knrhQXrwZy', 'test', NULL, 'active', 0, 'customer', '2025-05-04 03:48:37', '2025-05-04 03:48:37'),
+(9, 'support.slsupply@gmail.com', '$2y$10$77GVgdelKipZiXBNTkQeF.gJWVKkosPcHLr..rkB9vJB6xTDuGzPW', 'Administrator', NULL, 'active', 0, 'admin', '2025-05-04 09:48:15', '2025-05-04 09:51:21'),
+(21, 'smorphyguy12@gmail.com', '$2y$10$fZy7NBe0as9i8NlSFc8ZhupxSoQO2pdwNqDufrsbILSYHrQGoMWJu', 'Mark Steven B. Peligro', '09566434376', 'active', 0, 'supplier', '2025-05-04 14:29:49', '2025-05-04 14:29:49'),
+(25, 'markpeligro1234@gmail.com', '$2y$10$hsLHkysT9Z/2NHWfSVWmP.24SASO/AL6peFAcWi0tu4lSvW2TualG', 'Mark Steven', '09566434376', 'active', 0, 'supplier', '2025-05-20 07:47:57', '2025-05-20 07:47:57');
 
 -- --------------------------------------------------------
 
@@ -553,6 +602,7 @@ ALTER TABLE `notifications`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `order_number` (`order_number`),
   ADD KEY `idx_orders_customer` (`customer_id`),
   ADD KEY `idx_orders_supplier` (`supplier_id`),
@@ -563,6 +613,7 @@ ALTER TABLE `orders`
 -- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `idx_order_items_order` (`order_id`),
   ADD KEY `idx_order_items_product` (`product_id`);
 
@@ -618,6 +669,20 @@ ALTER TABLE `suppliers`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `supplier_business_info`
+--
+ALTER TABLE `supplier_business_info`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `supplier_id` (`supplier_id`);
+
+--
+-- Indexes for table `supplier_photos`
+--
+ALTER TABLE `supplier_photos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `supplier_id` (`supplier_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -648,7 +713,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -687,7 +752,16 @@ ALTER TABLE `notifications`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order_status_history`
@@ -723,13 +797,25 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `supplier_business_info`
+--
+ALTER TABLE `supplier_business_info`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `supplier_photos`
+--
+ALTER TABLE `supplier_photos`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
@@ -846,6 +932,18 @@ ALTER TABLE `product_images`
 --
 ALTER TABLE `suppliers`
   ADD CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `supplier_business_info`
+--
+ALTER TABLE `supplier_business_info`
+  ADD CONSTRAINT `supplier_business_info_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `supplier_photos`
+--
+ALTER TABLE `supplier_photos`
+  ADD CONSTRAINT `supplier_photos_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `wishlists`

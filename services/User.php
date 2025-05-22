@@ -18,7 +18,15 @@ class User
     {
         $this->db = Database::getInstance();
         $this->conn = $this->db->getConnection();
-        $this->mail = new MailService();
+        
+        // Try to initialize MailService, but handle failures gracefully
+        try {
+            $this->mail = new MailService();
+        } catch (\Exception $e) {
+            // Log the error but continue without mail service
+            error_log("WARNING: Mail service initialization failed: " . $e->getMessage());
+            $this->mail = null;
+        }
     }
 
     public function login($email, $password)

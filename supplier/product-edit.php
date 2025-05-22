@@ -1,6 +1,9 @@
 <?php
 include '../partials/main.php';
 
+// Include supplier approval check
+include 'check-approval.php';
+
 $productService = new SLSupplyHub\Product();
 $categoryService = new SLSupplyHub\Category();
 
@@ -10,7 +13,7 @@ $product = null;
 if ($productId) {
     $product = $productService->find($productId);
     // Verify product belongs to this supplier
-    if (!$product || $product['supplier_id'] != $session->getUserId()) {
+    if (!$product || $product['supplier_id'] != $supplierId) {
         header('Location: products.php');
         exit;
     }
@@ -19,7 +22,7 @@ if ($productId) {
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productData = [
-        'supplier_id' => $session->getUserId(),
+        'supplier_id' => $supplierId,
         'name' => $_POST['product_name'],
         'description' => $_POST['product_description'],
         'price' => $_POST['product_price'],
